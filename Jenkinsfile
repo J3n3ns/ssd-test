@@ -53,7 +53,7 @@ pipeline {
 		dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
             // Next Generation Warning plugin
             recordIssues(
-                     tool: pyLint(pattern: '**/pylint.report'),
+                     tools: pyLint(pattern: '**/pylint.report'),
                      unstableTotalAll: 20,
                      failedTotalAll: 30
                  )
