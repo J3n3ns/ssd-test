@@ -1,0 +1,88 @@
+[
+    {
+        "install-github-desktop-python-editor":"add python to env if needed",
+        "ip-address" : "157.230.247.231",
+        "access-token" : "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",
+        "step-" : "",
+        "git credentials": "git config --global credential.helper store",
+        "jenkins-password" : "2f427b8d8acb4369a6bbb104d9a9e208",
+        "sonarqube-token" : "d8743b753be4d25637000cc1a1a9bf2c289425c8"
+    },
+    {
+        "SETUP-VM" : "",
+        "step-0" : "sudo apt-get update",
+        "step-1" : "sudo apt-get install docker.io",
+        "step-2" : "sudo systemctl start docker",
+        "step-3" : "sudo groupadd docker",
+        "step-4" : "sudo usermod -aG docker $USER",
+        "step-5" : "docker run hello-world"
+    },
+    {
+        "push-into-git" : "copy prepared stuff into test repo, push"
+    },
+    {
+        "SETUP-JENKINS" : "",
+        "step-1" : "cd $HOME" ,
+        "step-2" : "git clone repository",
+        "step-2.5": "edit the value in blueocean to test repo's dir/ name",
+        "step-3" : "bash blueocean.sh",
+        "step-4" : "docker ps",
+        "step-5" : "docker logs <container-id_of_blueocean>",
+        "copy the initial password" : "ctrl-shift-c",
+        "step-6" : "<ip-address>:8080 in browser",
+        "step-7" : "setup/login admin account"
+    },
+    {
+        "CONFIG-WEBHOOK" : "",
+        "step-1" : "create pipeline project",
+        "step-2" : "check 'GitHub hook trigger for GITScm polling'",
+        "step-3" : "Pipeline -> Pipeline script from SCM -> Git",
+        "repository-url" : "https://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@github.com/<repo-name>.git",
+        "branches-to-build" : "*/main",
+        "script-path" : "Jenkinsfile",
+        "webhook-path" : "<ip-address>:port/github-webhook/"
+    },
+    {
+        "CONFIG-DEPENDENCY-CHECKER" : "",
+        "step-1" : "Dashboard -> Manage Jenkkins -> Manage plugins",
+        "step-2" : "Available -> OWASP Dependency Checker",
+        "step-3" : "Install",
+        "step-4" : "Dashboard -> Manage Jenkkins -> Global Tool Configuration -> Dependency Check",
+        "step-5" : "Name ('Default') -> Apply -> Save",
+        "step-6" : "copy paste jenkinsfile into repo, git push",
+        "step-7" : "Trigger build manually",
+        "step-8" : "git push again to trigger webhook"
+    },
+    {
+        "copy over all the python files, etc":""
+    },
+    {
+        "CONFIG-WARNING-NEXT-GENERATION" : "",
+        "step-1" : "Dashboard -> Manage Jenkkins -> Manage plugins",
+        "step-2" : "Available -> Warnings Next Generation Plugin",
+        "step-3" : "Uncomment the Jenkinsfile code"
+    },
+    {
+        "CONFIG-SONARQUBE-interface" : "",
+        "step-1" : "http://<ip_address>:9000/",
+        "step-2" : "login",
+        "step-3" : "Manual -> create project -> OWASP (projectname & key) -> locally",
+        "step-4" : "Token name (anything)",
+        "copy/save-the-sonarqube-token" : "ctrl-c"
+    },
+    {
+        "CONFIG-SONARQUBE-Jenkins" : "",
+        "step-1" : "Dashboard -> Manage Jenkkins -> Manage plugins",
+        "step-2" : "Available -> SonarQube Scanner for Jenkins",
+        "step-3" : "Dashboard -> Manage Jenkkins -> Manage Credentials",
+        "step-4" : "Stores scoped to Jenkins -> click (global) -> Add Credentials",
+        "step-5" : "Select Secret Text -> Secret (Paste sonarqube token) -> ID (leave blank) -> OK",
+        "step-6" : "Dashboard -> Configure system -> SonarQube Servers -> Add SonarQube",
+        "step-7" : "Name (SonarQube) -> Server URL (http://<ip_address>:9000/) -> Auth Token (Secret Text)",
+        "step-8" : "Apply -> Save",
+        "step-9" : "Dashboard -> Global Tool Configuration -> SonarQube Scanner",
+        "step-10" : "Add Scanner -> Name (SonarQube) -> Apply -> Save",
+        "step-11" : "Uncomment the Jenkinsfile code"
+    }
+    
+]
