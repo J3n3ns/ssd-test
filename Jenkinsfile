@@ -29,6 +29,13 @@ pipeline {
                 sh 'docker-compose -f docker-compose.yml -f docker-compose.test.yml -f docker-compose.selenium.yml down'
                 sh 'docker-compose -f docker-compose.yml -f docker-compose.test.yml -f docker-compose.selenium.yml up --build -d'
                  sh 'docker-compose ps'
+		input message: 'Finished using the web site? (Click "Proceed" to continue)'
+            }
+        }
+        stage('Teardown test environment') {
+            steps {
+                sh 'docker-compose -f docker-compose.yml -f docker-compose.test.yml -f docker-compose.selenium.yml down'
+                sh 'docker system prune -f' // prune all dangling images -f for no confirmation
             }
         }
         
