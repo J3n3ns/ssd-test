@@ -29,7 +29,7 @@ pipeline {
                 sh 'docker-compose -f docker-compose.yml -f docker-compose.test.yml -f docker-compose.selenium.yml down'
                 sh 'docker-compose -f docker-compose.yml -f docker-compose.test.yml -f docker-compose.selenium.yml up --build -d'
                  sh 'docker-compose ps'
-		input message: 'Finished using the web site? (Click "Proceed" to continue)'
+		// input message: 'Finished using the web site? (Click "Proceed" to continue)'
             }
         }
         stage('Static Code Analyis') {
@@ -45,6 +45,17 @@ pipeline {
                 sh 'docker-compose -f docker-compose.yml -f docker-compose.test.yml -f docker-compose.selenium.yml down'
                 sh 'docker system prune -f' // prune all dangling images -f for no confirmation
             }
+        }
+        stage('Code Quality Check via SonarQube') { 
+           steps { 
+            //   sh 'Sonar..Qube..'
+                script { 
+                 def scannerHome = tool 'SonarQube'; 
+                    withSonarQubeEnv('SonarQube') { 
+                    sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=OWSAP -Dsonar.sources=. "
+                    } 
+                } 
+           } 
         }
         
     }
