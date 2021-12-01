@@ -32,6 +32,14 @@ pipeline {
 		input message: 'Finished using the web site? (Click "Proceed" to continue)'
             }
         }
+        stage('Static Code Analyis') {
+            steps {
+                echo 'Analyzing code'
+                // Generate pylint warning report
+                sh 'pylint *.py > reports/pylint.report | echo 1'
+                // sh 'docker-compose exec -T flask-app sh -c "python3 -m bandit -r ."'
+            }
+        }
         stage('Teardown test environment') {
             steps {
                 sh 'docker-compose -f docker-compose.yml -f docker-compose.test.yml -f docker-compose.selenium.yml down'
@@ -40,5 +48,17 @@ pipeline {
         }
         
     }
-
+    post {
+	success {
+		dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
+            // Next Generation Warning plugin
+            recordIssues(
+                     tool: pyLint(pattern: '**/pylint.report'),
+                     unstableTotalAll: 20,
+                     failedTotalAll: 30
+                 )
+            // SonarQube
+            // recordIssues enabledForFailure: true, tool: sonarQube()
+		}
+	}
 }
