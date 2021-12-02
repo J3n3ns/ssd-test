@@ -69,7 +69,7 @@ pipeline {
                      failedTotalAll: 30
                  )
             // SonarQube
-            // recordIssues enabledForFailure: true, tool: sonarQube()
+            recordIssues enabledForFailure: true, tool: sonarQube()
 		}
 	}
 }
