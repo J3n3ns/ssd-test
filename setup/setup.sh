@@ -1,6 +1,6 @@
 #!/bin/bash
 ## Script to auto-setup nginx reverse proxy with jenkins
-
+ 
 sudo apt-get update
 sudo apt-get install docker.io
 sudo systemctl start docker
