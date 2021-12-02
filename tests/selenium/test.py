@@ -63,8 +63,9 @@ class SeleniumTest(unittest.TestCase):
                 print(e)
 
     def test_title(self):
+        els = self.driver.find_elements_by_tag_name("p")
 
-        self.assertIn("Welcome home", self.driver.title)
+        self.assertIn("This is the home page of our application.", els[0].text)
         
     def tearDown(self):
         self.driver.quit()
