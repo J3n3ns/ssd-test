@@ -40,6 +40,12 @@ pipeline {
                 // sh 'docker-compose exec -T flask-app sh -c "python3 -m bandit -r ."'
             }
         }
+        stage('Selenium Test') {
+            steps {
+                echo 'Running UI test'
+                sh 'docker-compose exec -T flask-app sh -c "python3 -m unittest -v tests/selenium/test.py"'
+            }
+        }
         stage('Teardown test environment') {
             steps {
                 sh 'docker-compose -f docker-compose.yml -f docker-compose.test.yml -f docker-compose.selenium.yml down'
