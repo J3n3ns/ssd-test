@@ -14,7 +14,7 @@ sudo docker network create jenkins
 sudo docker build -t myjenkins-blueocean:1.1 . 
 
 ## __Without nginx__
-sudo docker run --name jenkins-blueocean-dofd --rm --user root --detach --network jenkins -v /var/run/docker.sock:/var/run/docker.sock -v jenkins-data:/var/jenkins_home -v "$HOME":/home  --publish 8080:8080 myjenkins-blueocean:1.1
+sudo docker run --memory=3g --name jenkins-blueocean-dofd --rm --user root --detach --network jenkins -v /var/run/docker.sock:/var/run/docker.sock -v jenkins-data:/var/jenkins_home -v "$HOME":/home  --publish 8080:8080 myjenkins-blueocean:1.1
 
 ## __With nginx__
 
