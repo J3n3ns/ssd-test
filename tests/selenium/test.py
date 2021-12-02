@@ -63,7 +63,7 @@ class SeleniumTest(unittest.TestCase):
                 print(e)
 
     def test_title(self):
-        self.client.get('http://localhost:5000/')
+        self.driver.get('http://localhost:5000/')
         els = self.driver.find_elements_by_tag_name("p")
 
         self.assertIn("This is the home page of our application.", els[0].text)
